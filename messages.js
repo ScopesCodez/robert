@@ -7,8 +7,47 @@ class Message {
     }
 }
 
+function allStorage() {
+
+    var values = [],
+        keys = Object.keys(localStorage),
+        i = keys.length;
+
+    while ( i-- ) {
+        values.push( localStorage.getItem(keys[i]) );
+    }
+
+    return values;
+}
+
+let allMessages = allStorage();
+for (var i = 0; i < allMessages.length; i++) {
+    let message = JSON.parse(allMessages[i]);
+    if (message.author == "Robort") {
+        let newMessage = document.createElement('article');
+        newMessage.className = 'message is-info';
+        newMessage.id = message.id;
+        let date = new Date(message.date);
+        newMessage.innerHTML = `<div class="message-header">${message.author} <small>${date.getHours()}:${date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
+        messagesBox.appendChild(newMessage);
+    } else {
+        let newMessage = document.createElement('article');
+        newMessage.className = 'message is-dark';
+        newMessage.id = message.id;
+        let date = new Date(message.date);
+        newMessage.innerHTML = `<div class="message-header">${message.author} <small>${date.getHours()}:${date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
+        messagesBox.appendChild(newMessage);
+    }
+}
+
 function createMessage(author, content) {
     let message = new Message(content, author)
+    console.log(message);
+    localStorage.setItem(message.id, JSON.stringify({
+        author: message.author,
+        content: message.content,
+        date: message.date
+    }));
     return message;
 }
 
@@ -64,8 +103,8 @@ function reply(content) {
     newMessage.scrollIntoView();
 }
 
-function registerMessage() {
-    let content = document.getElementById('input').value;
+function registerMessage(messageContent=null) {
+    let content = messageContent || document.getElementById('input').value;
     if (content.length < 1) {return alert('Please enter a message')}
     let message = createMessage('You', content);
     let messagesBox = document.getElementById('messagesBox');
