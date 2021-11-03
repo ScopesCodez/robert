@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css" integrity="sha512-IgmDkwzs96t4SrChW29No3NXBIBv8baW490zk5aXvhCD8vuZM3yUSkbyTBcXohkySecyzIrUwiF/qV0cuPcL3Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <meta property="og:url" content="link">
+    <meta property="og:title" content="title in blue">
+    <meta property="og:site_name" content="small title">
+    <meta property="og:description" content="description">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="icon">
+    <meta name="theme-color" content="#2f3136">
+    <title>Robort | Your AI friend</title>
+</head>
+<body>
+    <nav class="navbar is-active is-link is-spaced">
+        <div class="navbar-brand">
+            <a href="/" class="navbar-item">
+                <h1 class="title" style="color: white;">Robort</h1>
+            </a>
+        </div>
+        <div class="navbar-start">
+            <a href="/" class="navbar-item">Chat</a>
+            <a href="/help" class="navbar-item">Help</a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="field is-grouped">
+                    <p class="control">
+                        <a class="button is-primary" href="https://github.com/ScopesCodez">
+                            <span class="icon">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>GitHub</span>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container is-max-desktop">
+        <h1 class="title">Hi, I'm Robort!</h1>
+        <p class="subtitle">Your smart friend to have a chat with.</p>
+
+        <h1 class="title is-4">Example conversation</h1>
+        <label for="you"><strong>You:</strong></label>
+        <span id="you" class="is-3"></span></p> 
+        <label for="robort"><strong>Robort:</strong></label>   
+        <span id="robort" class="is-3"></span></p>
+        <br>
+        <br>
+        <h1 class="title is-3">Chat with Robort!</h1>
+        <div class="messages" id="messagesBox"></div>
+        <br>
+        <input class="input" id="input" type="text" placeholder="Send to Robort..." required>
+        <button class="button" onclick="registerMessage()">Send &#8203<i class="far fa-paper-plane"></i></button>
+        <br>
+        <br>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+            var typed = new Typed("#you", {
+                strings: ['Hello!', 'What\'s 1+1?', 'I just came back from school.'],
+                typeSpeed: 20,
+                loop: true,
+                backDelay: 2500,
+                backSpeed: 20,
+            });
+    </script>
+    <script>
+        var typed = new Typed("#robort", {
+            strings: ['Hi there! How was your day?', '1+1 is equal to 2!', 'Welcome back! How was school?'],
+            typeSpeed: 0,
+            loop: true,
+            backDelay: 3000,
+            backSpeed: 0,
+        });
+    </script>
+    <script src="messages.js"></script>
+</body>
+</html>
