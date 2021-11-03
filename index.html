@@ -54,6 +54,9 @@
         <br>
         <br>
         <h1 class="title is-3">Chat with Robort!</h1>
+        <button class="button is-small is-info" onclick="localStorage.clear(); window.location.href='';">Restart Chat</button>
+        <br>
+        <br>
         <div class="messages" id="messagesBox"></div>
         <br>
         <input class="input" id="input" type="text" placeholder="Send to Robort..." required>
@@ -65,20 +68,20 @@
 
     <script>
             var typed = new Typed("#you", {
-                strings: ['Hello!', 'What\'s 1+1?', 'I just came back from school.'],
+                strings: ['Hello!', 'Hey!'],
                 typeSpeed: 20,
                 loop: true,
-                backDelay: 2500,
+                backDelay: 3000,
                 backSpeed: 20,
             });
     </script>
     <script>
         var typed = new Typed("#robort", {
-            strings: ['Hi there! How was your day?', '1+1 is equal to 2!', 'Welcome back! How was school?'],
-            typeSpeed: 0,
+            strings: ["Hello! How you doin?", "Howdy!", "Hey there!", "Wassup!", "Yo what's good!"],
+            typeSpeed: 10,
             loop: true,
-            backDelay: 3000,
-            backSpeed: 0,
+            backDelay: 3200,
+            backSpeed: 10,
         });
     </script>
     <script src="messages.js"></script>
