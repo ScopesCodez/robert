@@ -56,7 +56,12 @@ let types = {
     hello: "greeting",
     hi: "greeting",
     howdy: "greeting",
-    robert: "call"
+    robert: "call",
+    robort: "call",
+    robortbot: "call",
+    say: "echo",
+    echo: "echo",
+    repeat: "echo",
 }
 
 let responses = {
@@ -68,10 +73,12 @@ function getReply(message) {
     let content = message.toLowerCase();
     let result = "I couldn't understand what you said."
     let type;
+    let word;
     let words = content.split(' ');
     for (var i = 0; i < words.length; i++) {
         if (types[words[i]]) {
             type = types[words[i]];
+            word = words[i];
             break
         }
     }
@@ -82,10 +89,15 @@ function getReply(message) {
                 replies = responses.greeting
                 result = replies[Math.floor(Math.random() * replies.length)];
                 break;
+
             case 'call':
                 replies = responses.call
                 result = replies[Math.floor(Math.random() * replies.length)];
                 break;
+
+            case 'echo':
+                result = content.replace(word, "");
+                
         }
     }
 
