@@ -1,47 +1,27 @@
-class Message {
-    constructor(content, author) {
-        this.content = content;
-        this.author = author;
-        this.date = new Date();
-        this.id = Math.round(Math.random() * (99999999 - 10000000) + 10000000);
-    }
+function Message(content, author) {
+    this.content = content;
+    this.author = author;
+    this.date = new Date();
+    this.id = Math.round(Math.random() * (99999999 - 10000000) + 10000000);
 }
 
-function allStorage() {
+const br = document.createElement('br');
+const allMessages = Object.keys(localStorage).map(x => localStorage.getItem(x));
 
-    var values = [],
-        keys = Object.keys(localStorage),
-        i = keys.length;
-
-    while ( i-- ) {
-        values.push( localStorage.getItem(keys[i]) );
-    }
-
-    return values;
-}
-
-let allMessages = allStorage();
 for (var i = 0; i < allMessages.length; i++) {
-    let message = JSON.parse(allMessages[i]);
-    if (message.author == "Robort") {
-        let newMessage = document.createElement('article');
-        newMessage.className = 'message is-info';
-        newMessage.id = message.id;
-        let date = new Date(message.date);
-        newMessage.innerHTML = `<div class="message-header">${message.author} <small>${date.getHours()}:${date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
-        messagesBox.appendChild(newMessage);
-    } else {
-        let newMessage = document.createElement('article');
-        newMessage.className = 'message is-dark';
-        newMessage.id = message.id;
-        let date = new Date(message.date);
-        newMessage.innerHTML = `<div class="message-header">${message.author} <small>${date.getHours()}:${date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
-        messagesBox.appendChild(newMessage);
-    }
+    const message = JSON.parse(allMessages[i]);
+    const date = new Date(message.date);
+    
+    const newMessage = document.createElement('article');
+    newMessage.className = message.author === "Robort" ? 'message is-info' : 'message is-dark';
+    newMessage.id = message.id;
+    newMessage.innerHTML = `<div class="message-header">${message.author} <small>${date.getHours()}:${date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
+    
+    messagesBox.appendChild(newMessage);
 }
 
 function createMessage(author, content) {
-    let message = new Message(content, author)
+    const message = new Message(content, author)
     console.log(message);
     localStorage.setItem(message.id, JSON.stringify({
         author: message.author,
@@ -51,53 +31,32 @@ function createMessage(author, content) {
     return message;
 }
 
-let types = {
+const types = {
     hey: "greeting",
     hello: "greeting",
     hi: "greeting",
     howdy: "greeting",
-    robert: "call",
-    robort: "call",
-    robortbot: "call",
-    say: "echo",
-    echo: "echo",
-    repeat: "echo",
-}
+    robert: "call"
+};
 
-let responses = {
+const responses = {
     greeting: ["Hello! How you doin?", "Howdy!", "Hey there!", "Wassup!", "Yo what's good!"],
     call: ["That's me!", "Hi! How can I help?"]
-}
+};
 
 function getReply(message) {
-    let content = message.toLowerCase();
     let result = "I couldn't understand what you said."
-    let type;
-    let word;
-    let words = content.split(' ');
-    for (var i = 0; i < words.length; i++) {
-        if (types[words[i]]) {
-            type = types[words[i]];
-            word = words[i];
-            break
-        }
-    }
+    const words = message.toLowerCase().split(/\s+/);
+    const type = words.find(x => !!x);
+
     if (type) {
         let replies;
-        switch(type) {
+        switch (type) {
             case 'greeting':
-                replies = responses.greeting
-                result = replies[Math.floor(Math.random() * replies.length)];
+                result = responses.greeting[Math.floor(Math.random() * replies.length)];
                 break;
-
             case 'call':
-                replies = responses.call
-                result = replies[Math.floor(Math.random() * replies.length)];
-                break;
-
-            case 'echo':
-                result = content.replace(word, "");
-                
+                result = responses.call[Math.floor(Math.random() * replies.length)];
         }
     }
 
@@ -105,9 +64,9 @@ function getReply(message) {
 }
 
 function reply(content) {
-    let message = createMessage('Robort', content);
-    let messagesBox = document.getElementById('messagesBox');
-    let newMessage = document.createElement('article');
+    const message = createMessage('Robort', content);
+    const messagesBox = document.getElementById('messagesBox');
+    const newMessage = document.createElement('article');
     newMessage.className = 'message is-info';
     newMessage.id = message.id;
     newMessage.innerHTML = `<div class="message-header">${message.author} <small>${message.date.getHours()}:${message.date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
@@ -116,12 +75,13 @@ function reply(content) {
 }
 
 function registerMessage(messageContent=null) {
-    let content = messageContent || document.getElementById('input').value;
-    if (content.length < 1) {return alert('Please enter a message')}
-    let message = createMessage('You', content);
-    let messagesBox = document.getElementById('messagesBox');
-    let newMessage = document.createElement('article');
-    let br = document.createElement('br');
+    const content = messageContent || document.getElementById('input').value;
+    if (content.length < 1) return alert('Please enter a message');
+    
+    const message = createMessage('You', content);
+    const messagesBox = document.getElementById('messagesBox');
+    const newMessage = document.createElement('article');
+    
     newMessage.className = 'message is-dark';
     newMessage.id = message.id;
     newMessage.innerHTML = `<div class="message-header">${message.author} <small>${message.date.getHours()}:${message.date.getMinutes()}</small></div><div class="message-body">${message.content}</div>`
@@ -129,16 +89,13 @@ function registerMessage(messageContent=null) {
     messagesBox.appendChild(br);
     messagesBox.appendChild(br);
     newMessage.scrollIntoView();
+    
     document.getElementById('input').value = '';
-    let replyMessage = getReply(message.content);
-    setTimeout(() => {
-        reply(replyMessage);
-    }, 500);
+    const replyMessage = getReply(message.content);
+    setTimeout(() => reply(replyMessage), 500);
 }
 
 document.addEventListener("keydown", event => {
-    if (event.isComposing || event.keyCode !== 13) {
-      return;
-    }
+    if (event.isComposing || event.keyCode !== 13) return;
     registerMessage();
-  });
+});
